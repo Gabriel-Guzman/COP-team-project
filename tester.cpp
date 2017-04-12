@@ -51,7 +51,7 @@ int main()
 
     while(keepGoing)
     {
-        cout<<"1 addtag, 2 deleteTag, 3 print, 4 search, 5 stringifyMemory"<<endl;
+        cout<<"1 addtag, 2 deleteTag, 3 print, 4 search, 5 stringifyMemory, 6 quit"<<endl;
         cin>>choice;
         while (choice >10 || choice < 1 || cin.fail())
         {
@@ -107,6 +107,9 @@ int main()
 
             case 5:
                 test.stringifyMemory();
+                break;
+            case 6:
+                keepGoing=false;
                 break;
         }
         cout<<endl;

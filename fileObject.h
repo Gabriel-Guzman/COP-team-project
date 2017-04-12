@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <fstream>
+#include <algorithm>
 
 using namespace std;
 
@@ -29,6 +30,7 @@ class fileObject
         bool checkForTag(string tag);
         void stringifyFileObject();
         string returnFileName();
+        vector<string>& getTagList();
 
 };
 
@@ -37,6 +39,11 @@ fileObject::fileObject(vector<string>& newVectorTag, string newFileName)
 {
     tagList = newVectorTag;
     fileName= newFileName;
+}
+
+vector<string>& fileObject::getTagList()
+{
+    return tagList;
 }
 
 string fileObject::returnFileName()
@@ -116,6 +123,7 @@ void fileObject::printTagList()
 // this will search through tagList and return true if the tag exist,
 // part of a failsafe to avoid deleting nonexistent tags or adding multiples
 // of the same tag
+// returns true if tag exist
 bool fileObject::checkForTag(string tag)
 {
     int enormity = tagList.size();
