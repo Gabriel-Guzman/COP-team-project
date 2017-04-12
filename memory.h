@@ -24,6 +24,8 @@ class memory
 
         void printMemory();
         void switchAdd(vector<string>&, string);
+        vector<string>& lowerCase(vector<string>&);
+        vector<string>& deleteDuplicates(vector<string>&, int index);
 
 };
 
@@ -31,6 +33,66 @@ class memory
 memory::memory(vector<fileObject> &init)
 {
     memoryVector = init;
+}
+
+/*
+    This method checks if any of the tags to be added in the vector are duplicates,
+    it also compares to the tagVector of the file object and searches for duplicates.
+    if there are any duplicates the method deletes those tags before returning the vector
+*/
+/// this method is not super failsafe and if you add ten duplicates mixed with regular tags it will fail
+vector<string>& memory::deleteDuplicates(vector<string>& tags, int index)
+{
+    // run through a loop to check for any duplicate tags
+    // it pushes back the duplicates, but does not repeatedly hit doubles
+    vector<int> duplicates;
+    for (unsigned int i = 0; i<tags.size(); i++)
+    {
+        for (unsigned int j=0; j<i; j++)
+        {
+            if (tags[i]==tags[j])
+            {
+                duplicates.push_back(i);
+            }
+        }
+    }
+    int counter = duplicates.size()-1;
+    int toErase;
+
+    // this erases from back to front to avoid changing index
+    // of to-be-erased tags
+    while (counter>= 0)
+    {
+        toErase = duplicates[counter];
+        tags.erase(tags.begin()+toErase);
+        counter--;
+    }
+    duplicates.clear();
+    bool match;
+
+    /*
+        This will check if duplicates of the tags we are trying to add exist
+        already within the fileObject. If they do they are added to the duplicate vector
+        to be deleted later.
+    */
+    for (unsigned int i = 0; i<tags.size(); i++)
+    {
+        match = memoryVector[index].checkForTag(tags[i]);
+        if (match)
+        {
+            duplicates.push_back(i);
+        }
+    }
+
+    counter= duplicates.size()-1;
+     while (counter>= 0)
+    {
+        toErase = duplicates[counter];
+        tags.erase(tags.begin()+toErase);
+        counter--;
+    }
+
+    return tags;
 }
 
 /*
@@ -43,7 +105,12 @@ memory::memory(vector<fileObject> &init)
 */
 void memory::switchAdd(vector<string>& tags, string file)
 {
+    // changes the tags to lower case
+    tags = lowerCase(tags);
+    // checks for repetition of tags in vector or target file
     int index = checkFileExistence(file);
+
+    tags = deleteDuplicates(tags, index);
 
     if (index == -1)
     {
@@ -236,4 +303,22 @@ void memory::stringifyMemory()
     }
 
 }
+
+// takes all the tags to be added and changes them to lower case
+vector<string>& memory::lowerCase(vector<string>& tags)
+{
+    string myTag;
+    //takes string from vector, changes it to lower case, then replaces
+    // it with the old string
+    for (unsigned int i = 0; i<tags.size(); i++)
+    {
+        myTag = tags[i];
+
+        transform(myTag.begin(), myTag.end(), myTag.begin(), ::tolower);
+
+        tags[i] = myTag;
+    }
+    return tags;
+}
+
 #endif // MEMORY_H
