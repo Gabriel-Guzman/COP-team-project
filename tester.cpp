@@ -6,6 +6,7 @@
 #include <iterator>
 #include <cstdlib>
 #include <limits>
+#include "dirent.h"
 
 using namespace std;
 vector<string> splitString(string);
@@ -36,7 +37,6 @@ int main()
     stuff.push_back("twelve");
     test.createFileObject(stuff, fileName2);
 
-
     int choice;
     string tag1;
     string tag;
@@ -51,7 +51,8 @@ int main()
 
     while(keepGoing)
     {
-        cout<<"1 addtag, 2 deleteTag, 3 print, 4 search, 5 stringifyMemory, 6 quit"<<endl;
+        //1 addtag, 2 deleteTag, 3 print, 4 search, 5 stringifyMemory, 6 quit
+        cout<<"1. Add a tag\n2. Delete a tag\n3. Print\n4. Search\n5. Save\n6. Quit"<<endl;
         cin>>choice;
         while (choice >10 || choice < 1 || cin.fail())
         {
