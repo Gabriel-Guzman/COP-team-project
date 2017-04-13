@@ -25,6 +25,8 @@ int main()
     vector<fileObject> init;
     memory test(init);
     test.initializeMemory();
+
+    /*
     test.createFileObject(stuff, cheese);
 
 
@@ -38,8 +40,8 @@ int main()
     stuff.clear();
     stuff.push_back("eight");
     stuff.push_back("twelve");
-    test.createFileObject(stuff, fileName2);
-
+    test.createFileObject(stuff, fileName2*/
+    
     int choice;
     string tag1;
     string tag;

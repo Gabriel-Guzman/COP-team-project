@@ -1,6 +1,11 @@
 #ifndef MEMORY_H
 #define MEMORY_H
-#include "fileObject.h"
+
+void remove_from_string( string &str, string chars_to_remove ) {
+   for (unsigned int i = 0; i < chars_to_remove.length(); ++i) {
+      str.erase(remove(str.begin(), str.end(), chars_to_remove[i]), str.end());
+   }
+}
 
 class memory
 {
@@ -13,6 +18,7 @@ class memory
         // need to improve this to search for multiple tags or
         // has certain tags but does not have others
         vector<string> searchForFilesWithTag(string);
+        //parameters: tag list, file name
         void createFileObject(vector<string>&, string);
         int checkFileExistence(string);
         void addTagToFile(int, string);
@@ -59,13 +65,12 @@ bool memory::initializeMemory(){
             ss.str("");
             ss.clear();
 
+            remove_from_string(temp_filename, ":");
+
             createFileObject(tags, temp_filename);
         }
     } else {
         worked = false;
-    }
-    for(int i = 0; i < tags.size(); i++){
-        cout << tags[i]<< endl;
     }
 
     ifs.close();
