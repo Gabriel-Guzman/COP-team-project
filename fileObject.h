@@ -31,6 +31,10 @@ class fileObject
         void stringifyFileObject();
         string returnFileName();
         vector<string>& getTagList();
+        string commaDeleter(string checkString);
+        bool commaPositionChecker (string checkString);
+        bool commaChecker(string checkString);
+
 
 };
 
@@ -180,7 +184,7 @@ bool fileObject::commaPositionChecker (string checkString)
 {
     bool isEnd = false;
     int commaIndex = checkString.find(",");
-    if (commaIndex == (checkString.length() - 1)
+    if (commaIndex == (checkString.length() - 1))
         isEnd = true;
     return isEnd;
 }

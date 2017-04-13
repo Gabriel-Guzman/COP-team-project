@@ -11,7 +11,7 @@ public:
 
 	vector<string> get_files();
 
-}
+};
 
 FileIO::FileIO() {
 	success = false;
@@ -29,16 +29,16 @@ FileIO::FileIO() {
 	} else {
 		// could not open directory 
 		perror ("");
-		return EXIT_FAILURE;
+		//return EXIT_FAILURE;
 	}
 }
 
 
 
-FileIO::worked(){
+bool FileIO::worked(){
 	return success;
 }
 
-FileIO::get_files(){
+vector<string> FileIO::get_files(){
 	return cwd_files;
 }

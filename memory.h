@@ -37,24 +37,38 @@ memory::memory(vector<fileObject> &init)
 }
 
 bool memory::initializeMemory(){
-    bool worked = false;
+    bool worked = true;
     ifstream ifs;
     ifs.open("memoryFile.txt", ios::in);
+
+    vector<string> tags;
 
     string current_line;
     string temp_filename;
     string temp_tag;
     if(ifs.is_open()){
-        worked = true;
+
         while(getline(ifs, current_line)){
             stringstream ss(current_line);
 
-            while(cout << ss);
+            ss >> temp_filename;
+
+            while(ss >> temp_tag)
+                tags.push_back(temp_tag);
 
             ss.str("");
             ss.clear();
+
+            createFileObject(tags, temp_filename);
         }
+    } else {
+        worked = false;
     }
+    for(int i = 0; i < tags.size(); i++){
+        cout << tags[i]<< endl;
+    }
+
+    ifs.close();
     return worked;
 }
 /*

@@ -1,0 +1,4 @@
+#!/bin/bash
+
+g++ tester.cpp -o tester.o -Wall
+./tester.o

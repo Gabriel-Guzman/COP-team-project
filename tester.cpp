@@ -7,6 +7,7 @@
 #include "fileObject.h"
 #include "memory.h"
 #include "dirent.h"
+#include "FileIO.h"
 
 using namespace std;
 vector<string> splitString(string);
