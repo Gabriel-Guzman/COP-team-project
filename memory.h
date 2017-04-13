@@ -24,9 +24,9 @@ class memory
         bool initializeMemory();
 
         void printMemory();
-        void switchAdd(vector<string>&, string);
-        vector<string>& lowerCase(vector<string>&);
-        vector<string>& deleteDuplicates(vector<string>&, int index);
+        void switchAdd(string, string);
+        string lowerCase(string);
+        bool deleteDuplicates(string, int index);
 
 };
 
@@ -63,33 +63,8 @@ bool memory::initializeMemory(){
     if there are any duplicates the method deletes those tags before returning the vector
 */
 /// this method is not super failsafe and if you add ten duplicates mixed with regular tags it will fail
-vector<string>& memory::deleteDuplicates(vector<string>& tags, int index)
+bool memory::deleteDuplicates(string tag, int index)
 {
-    // run through a loop to check for any duplicate tags
-    // it pushes back the duplicates, but does not repeatedly hit doubles
-    vector<int> duplicates;
-    for (unsigned int i = 0; i<tags.size(); i++)
-    {
-        for (unsigned int j=0; j<i; j++)
-        {
-            if (tags[i]==tags[j])
-            {
-                duplicates.push_back(i);
-            }
-        }
-    }
-    int counter = duplicates.size()-1;
-    int toErase;
-
-    // this erases from back to front to avoid changing index
-    // of to-be-erased tags
-    while (counter>= 0)
-    {
-        toErase = duplicates[counter];
-        tags.erase(tags.begin()+toErase);
-        counter--;
-    }
-    duplicates.clear();
     bool match;
 
     /*
@@ -97,24 +72,9 @@ vector<string>& memory::deleteDuplicates(vector<string>& tags, int index)
         already within the fileObject. If they do they are added to the duplicate vector
         to be deleted later.
     */
-    for (unsigned int i = 0; i<tags.size(); i++)
-    {
-        match = memoryVector[index].checkForTag(tags[i]);
-        if (match)
-        {
-            duplicates.push_back(i);
-        }
-    }
+        match = memoryVector[index].checkForTag(tag);
 
-    counter= duplicates.size()-1;
-     while (counter>= 0)
-    {
-        toErase = duplicates[counter];
-        tags.erase(tags.begin()+toErase);
-        counter--;
-    }
-
-    return tags;
+    return match;
 }
 
 /*
@@ -125,14 +85,16 @@ vector<string>& memory::deleteDuplicates(vector<string>& tags, int index)
     designated fileObject.
     Assumes that a nonexistent directory file will not be input
 */
-void memory::switchAdd(vector<string>& tags, string file)
+void memory::switchAdd(string tag, string file)
 {
     // changes the tags to lower case
-    tags = lowerCase(tags);
+    tag = lowerCase(tag);
     // checks for repetition of tags in vector or target file
     int index = checkFileExistence(file);
 
-    tags = deleteDuplicates(tags, index);
+
+    vector<string> tags;
+    tags.push_back(tag);
 
     if (index == -1)
     {
@@ -140,19 +102,15 @@ void memory::switchAdd(vector<string>& tags, string file)
     }
     else
     {
-        int enormity = tags.size();
-        int counter= 0;
-
-        while (counter <enormity)
-        {
-            memoryVector[index].addTag(tags[counter]);
-            counter++;
-        }
+        bool duplicate = deleteDuplicates(tag, index);
+        if (duplicate)
+            return;
+        else
+            memoryVector[index].addTag(tag);
     }
 }
 
 // initializes fileObject and the adds it to the memoryVector
-// this should be done if check fileExistence returns -1!
 void memory::createFileObject(vector<string>& tags, string file)
 {
     fileObject cell(tags, file);
@@ -327,20 +285,17 @@ void memory::stringifyMemory()
 }
 
 // takes all the tags to be added and changes them to lower case
-vector<string>& memory::lowerCase(vector<string>& tags)
+string memory::lowerCase(string tag)
 {
-    string myTag;
     //takes string from vector, changes it to lower case, then replaces
     // it with the old string
-    for (unsigned int i = 0; i<tags.size(); i++)
-    {
-        myTag = tags[i];
+        string myTag = tag;
 
         transform(myTag.begin(), myTag.end(), myTag.begin(), ::tolower);
 
-        tags[i] = myTag;
-    }
-    return tags;
+        tag = myTag;
+
+    return tag;
 }
 
 #endif // MEMORY_H

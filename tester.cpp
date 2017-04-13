@@ -65,6 +65,7 @@ int main()
         }
 
         switch(choice)
+        // takes one string at a time.
         {
             case 1:
                 cout<<"to what file?"<<endl;
@@ -78,7 +79,11 @@ int main()
                 tag = tag1+ tag;
                 stuff = splitString(tag);
 
-                test.switchAdd(stuff, file);
+                /// takes one string at a time
+                for (unsigned int i =0; i<stuff.size(); i++)
+                {
+                        test.switchAdd(stuff[i], file);
+                }
                 break;
             case 2:
                 cout<<"from what file?"<<endl;
