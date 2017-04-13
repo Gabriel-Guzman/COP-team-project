@@ -20,7 +20,8 @@ class memory
         void deleteTagFromFile(string, string);
         //void deleteFileObject(string); not sure if needed
 
-        void initializeMemory(); // has not been created yet
+        // Loads the previously saved file objects to memory. Only to be used once on creation
+        bool initializeMemory();
 
         void printMemory();
         void switchAdd(vector<string>&, string);
@@ -35,6 +36,27 @@ memory::memory(vector<fileObject> &init)
     memoryVector = init;
 }
 
+bool memory::initializeMemory(){
+    bool worked = false;
+    ifstream ifs;
+    ifs.open("memoryFile.txt", ios::in);
+
+    string current_line;
+    string temp_filename;
+    string temp_tag;
+    if(ifs.is_open()){
+        worked = true;
+        while(getline(ifs, current_line)){
+            stringstream ss(current_line);
+
+            while(cout << ss);
+
+            ss.str("");
+            ss.clear();
+        }
+    }
+    return worked;
+}
 /*
     This method checks if any of the tags to be added in the vector are duplicates,
     it also compares to the tagVector of the file object and searches for duplicates.

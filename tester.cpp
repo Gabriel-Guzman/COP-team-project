@@ -1,11 +1,11 @@
-#include "fileObject.h"
-#include "memory.h"
 #include <iostream>
 #include <sstream>
 #include <algorithm>
 #include <iterator>
 #include <cstdlib>
 #include <limits>
+#include "fileObject.h"
+#include "memory.h"
 #include "dirent.h"
 
 using namespace std;
@@ -13,6 +13,7 @@ vector<string> splitString(string);
 
 int main()
 {
+
     vector<string> stuff;
     stuff.push_back("tag1");
     stuff.push_back("tag2");
@@ -22,6 +23,7 @@ int main()
     // should be its own function, necessary to initialize memoryVector
     vector<fileObject> init;
     memory test(init);
+    test.initializeMemory();
     test.createFileObject(stuff, cheese);
 
 
