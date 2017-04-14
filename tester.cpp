@@ -24,7 +24,10 @@ int main()
     // should be its own function, necessary to initialize memoryVector
     vector<fileObject> init;
     memory test(init);
-    test.initializeMemory();
+    if(!test.initializeMemory()){
+        cout << "Error reading memory. Shutting down." << endl;
+        return 1;
+    }
 
     /*
     test.createFileObject(stuff, cheese);

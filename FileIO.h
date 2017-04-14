@@ -29,7 +29,7 @@ FileIO::FileIO() {
 	} else {
 		// could not open directory 
 		perror ("");
-		//return EXIT_FAILURE;
+
 	}
 }
 
