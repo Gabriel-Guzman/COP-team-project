@@ -25,6 +25,8 @@ int main()
     vector<fileObject> init;
     memory test(init);
     test.initializeMemory();
+
+    /*
     test.createFileObject(stuff, cheese);
 
 
@@ -38,8 +40,8 @@ int main()
     stuff.clear();
     stuff.push_back("eight");
     stuff.push_back("twelve");
-    test.createFileObject(stuff, fileName2);
-
+    test.createFileObject(stuff, fileName2*/
+    
     int choice;
     string tag1;
     string tag;
@@ -57,7 +59,7 @@ int main()
         //1 addtag, 2 deleteTag, 3 print, 4 search, 5 stringifyMemory, 6 quit
         cout<<"1. Add a tag\n2. Delete a tag\n3. Print\n4. Search\n5. Save\n6. Quit"<<endl;
         cin>>choice;
-        while (choice >10 || choice < 1 || cin.fail())
+        while (choice >6 || choice < 1 || cin.fail())
         {
             cin.clear();
             cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -69,9 +71,9 @@ int main()
         // takes one string at a time.
         {
             case 1:
-                cout<<"to what file?"<<endl;
+                cout<<"To what file would you like to add a tag to?"<<endl;
                 cin>>file;
-                cout<<"what tags?"<<endl;
+                cout<<"What tags would you like to add?"<<endl;
                 // this takes in whole line cin as a string tag
                 // converts char array into vector of individual words.
                 cin>>tag1;
@@ -87,9 +89,9 @@ int main()
                 }
                 break;
             case 2:
-                cout<<"from what file?"<<endl;
+                cout<<"What file would you like to delete the tag from>"<<endl;
                 cin>>file;
-                cout<<"what tag?"<<endl;
+                cout<<"Which tag would you like to delete?"<<endl;
                 cin>>tag;
 
                 test.deleteTagFromFile(file, tag);
@@ -116,9 +118,11 @@ int main()
 
             case 5:
                 test.stringifyMemory();
+                cout << "Tags and file(s) saved!" << endl;
                 break;
             case 6:
                 keepGoing=false;
+                cout << "Closing program.";
                 break;
         }
         cout<<endl;
