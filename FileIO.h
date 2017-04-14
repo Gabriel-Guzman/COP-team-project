@@ -8,7 +8,7 @@ public:
 	// This method will parse fileName and create fileObjects, that will be pushed to mem
 	bool worked();
 	// Check if worked before calling get files to avoid unexpected behavior
-	void sync(vector<fileObject>& memoryFiles);
+	//void sync(memory memoryFiles);
 	// Syncs memory and cwd files by adding all missing cwd files into memory AND deleting all noncwd files from memory
 
 	vector<string> get_files();
@@ -46,12 +46,12 @@ vector<string> FileIO::get_files(){
 }
 
 
-void FileIO::sync(vector<fileObject>& memoryFiles){
+/*void FileIO::sync(memory memoryFiles){
 	vector<string> cwdFiles = get_files();
 	for(unsigned int i; i < cwdFiles.size(); i++){
-		if(memory.checkFileExistence(cwdFiles[i]) == (-1)){
+		if(memoryFiles.checkFileExistence(cwdFiles[i]) == (-1)){
 			vector<string> emptyTagList;
-			memory.createFileObject(emptyTagList, cwdFiles[i]);
+			memoryFiles.createFileObject(emptyTagList, cwdFiles[i]);
 		}
 	}
 
@@ -59,3 +59,4 @@ void FileIO::sync(vector<fileObject>& memoryFiles){
 		if()
 	}
 }
+*/

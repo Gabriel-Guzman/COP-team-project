@@ -70,6 +70,8 @@ int main()
         switch(choice)
         // takes one string at a time.
         {
+			int checker;
+			vector<string> tagSearch;
             case 1:
                 
                 cout<<"To what file would you like to add a tag to?"<<endl;
@@ -97,7 +99,7 @@ int main()
             case 2:
                 cout<<"What file would you like to delete the tag from>"<<endl;
                 cin>>file;
-                int checker = test.checkFileExistence(file);
+                checker = test.checkFileExistence(file);
                 if(checker == -1)
                 {
 					cout << "A file with that name does not exist. Returning to menu." << endl;
@@ -106,20 +108,23 @@ int main()
 				
 				else
 				{
-					
+					tagSearch = test.at(checker).getTagList();
 				}
+				
                 cout<<"Which tag would you like to delete?"<<endl;
                 cin>>tag;
-                if(
+           
+                
 
-                test.deleteTagFromFile(file, tag);
+                //test.deleteTagFromFile(file, tag);
+               
                 break;
 
             case 3:
                 test.printMemory();
                 break;
 
-            case 4:
+            case 4: 
                 cout<<"What tag would you like to search for?"<<endl;
                 cin>>tag;
                 fileList = test.searchForFilesWithTag(tag);
@@ -133,6 +138,7 @@ int main()
                     counter++;
                 }
                 break;
+			
 
             case 5:
                 test.stringifyMemory();
