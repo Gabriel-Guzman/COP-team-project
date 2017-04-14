@@ -57,6 +57,7 @@ void FileIO::sync(memory memoryFiles){
 
 	for(unsigned int i; i < memoryFiles.size(); i++){
 		if(!is_in_vector(cwdFiles, memoryFiles[i])){
+			//TODO write delete funct
 			deleteFromMemory(memoryFiles[i]);
 		}
 	}
