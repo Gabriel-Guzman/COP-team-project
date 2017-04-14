@@ -71,8 +71,14 @@ int main()
         // takes one string at a time.
         {
             case 1:
+                
                 cout<<"To what file would you like to add a tag to?"<<endl;
                 cin>>file;
+                if(test.checkFileExistence(file) == -1)
+                {
+					cout << "A file with that name does not exist. Returning to menu." << endl;
+					break;
+				}
                 cout<<"What tags would you like to add?"<<endl;
                 // this takes in whole line cin as a string tag
                 // converts char array into vector of individual words.
@@ -91,8 +97,20 @@ int main()
             case 2:
                 cout<<"What file would you like to delete the tag from>"<<endl;
                 cin>>file;
+                int checker = test.checkFileExistence(file);
+                if(checker == -1)
+                {
+					cout << "A file with that name does not exist. Returning to menu." << endl;
+					break;
+				} 
+				
+				else
+				{
+					
+				}
                 cout<<"Which tag would you like to delete?"<<endl;
                 cin>>tag;
+                if(
 
                 test.deleteTagFromFile(file, tag);
                 break;
