@@ -46,7 +46,7 @@ vector<string> FileIO::get_files(){
 }
 
 
-void FileIO::sync(vector<fileObject>& memoryFiles){
+void FileIO::sync(memory memoryFiles){
 	vector<string> cwdFiles = get_files();
 	for(unsigned int i; i < cwdFiles.size(); i++){
 		if(memory.checkFileExistence(cwdFiles[i]) == (-1)){
@@ -56,6 +56,12 @@ void FileIO::sync(vector<fileObject>& memoryFiles){
 	}
 
 	for(unsigned int i; i < memoryFiles.size(); i++){
-		if()
+		if(!is_in_vector(cwdFiles, memoryFiles[i])){
+			deleteFromMemory(memoryFiles[i]);
+		}
 	}
+}
+
+bool is_in_vector(vector<string> v, string to_find) {
+	return (find(v.begin(), v.end(), to_find) != v.end());
 }
