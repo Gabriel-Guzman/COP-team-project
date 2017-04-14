@@ -31,7 +31,7 @@ FileIO::FileIO() {
 	} else {
 		// could not open directory 
 		perror ("");
-		//return EXIT_FAILURE;
+
 	}
 }
 
@@ -46,7 +46,11 @@ vector<string> FileIO::get_files(){
 }
 
 
+<<<<<<< HEAD
 /*void FileIO::sync(memory memoryFiles){
+=======
+void FileIO::sync(memory memoryFiles){
+>>>>>>> 3e174d27dfbbcc0838819ef46ee53db210c85bc6
 	vector<string> cwdFiles = get_files();
 	for(unsigned int i; i < cwdFiles.size(); i++){
 		if(memoryFiles.checkFileExistence(cwdFiles[i]) == (-1)){
@@ -56,7 +60,17 @@ vector<string> FileIO::get_files(){
 	}
 
 	for(unsigned int i; i < memoryFiles.size(); i++){
-		if()
+		if(!is_in_vector(cwdFiles, memoryFiles[i])){
+			//TODO write delete funct
+			deleteFromMemory(memoryFiles[i]);
+		}
 	}
 }
+<<<<<<< HEAD
 */
+=======
+
+bool is_in_vector(vector<string> v, string to_find) {
+	return (find(v.begin(), v.end(), to_find) != v.end());
+}
+>>>>>>> 3e174d27dfbbcc0838819ef46ee53db210c85bc6
