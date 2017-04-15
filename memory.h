@@ -1,12 +1,6 @@
 #ifndef MEMORY_H
 #define MEMORY_H
 
-void remove_from_string( string &str, string chars_to_remove ) {
-   for (unsigned int i = 0; i < chars_to_remove.length(); ++i) {
-      str.erase(remove(str.begin(), str.end(), chars_to_remove[i]), str.end());
-   }
-}
-
 class memory
 {
     private:
@@ -18,6 +12,7 @@ class memory
         // need to improve this to search for multiple tags or
         // has certain tags but does not have others
         vector<string> searchForFilesWithTag(string);
+        void remove_from_string( string &str, string chars_to_remove );
         //parameters: tag list, file name
         void createFileObject(vector<string>&, string);
         int checkFileExistence(string);
@@ -25,7 +20,7 @@ class memory
         // this currently only deletes one tag input at a time
         void deleteTagFromFile(string, string);
         //void deleteFileObject(string); not sure if needed
-
+        void deleteFileObject(string file);
         // Loads the previously saved file objects to memory. Only to be used once on creation
         bool initializeMemory();
 
@@ -68,6 +63,7 @@ bool memory::initializeMemory(){
             remove_from_string(temp_filename, ":");
 
             createFileObject(tags, temp_filename);
+            tags.clear();
         }
     } else {
         worked = false;
@@ -76,12 +72,19 @@ bool memory::initializeMemory(){
     ifs.close();
     return worked;
 }
+
+void memory::deleteFileObject(string file)
+{
+    int index = checkFileExistence(file);
+    if (index != -1)
+        memoryVector.erase(memoryVector.begin()+index);
+
+}
 /*
     This method checks if any of the tags to be added in the vector are duplicates,
     it also compares to the tagVector of the file object and searches for duplicates.
     if there are any duplicates the method deletes those tags before returning the vector
 */
-/// this method is not super failsafe and if you add ten duplicates mixed with regular tags it will fail
 bool memory::deleteDuplicates(string tag, int index)
 {
     bool match;
@@ -127,6 +130,12 @@ void memory::switchAdd(string tag, string file)
         else
             memoryVector[index].addTag(tag);
     }
+}
+
+void memory::remove_from_string( string &str, string chars_to_remove ) {
+   for (unsigned int i = 0; i < chars_to_remove.length(); ++i) {
+      str.erase(remove(str.begin(), str.end(), chars_to_remove[i]), str.end());
+   }
 }
 
 // initializes fileObject and the adds it to the memoryVector

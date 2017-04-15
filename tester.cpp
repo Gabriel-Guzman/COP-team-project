@@ -14,37 +14,18 @@ vector<string> splitString(string);
 
 int main()
 {
-
     vector<string> stuff;
-    stuff.push_back("tag1");
-    stuff.push_back("tag2");
 
-    string cheese = "cheese";
-
-    // should be its own function, necessary to initialize memoryVector
     vector<fileObject> init;
     memory test(init);
+
     if(!test.initializeMemory()){
         cout << "Error reading memory. Shutting down." << endl;
         return 1;
     }
 
-    /*
-    test.createFileObject(stuff, cheese);
 
 
-    string fileName1 = "beans";
-    stuff.clear();
-    stuff.push_back("red");
-    stuff.push_back("blue");
-    test.createFileObject(stuff, fileName1);
-
-    string fileName2 = "carrots";
-    stuff.clear();
-    stuff.push_back("eight");
-    stuff.push_back("twelve");
-    test.createFileObject(stuff, fileName2*/
-    
     int choice;
     string tag1;
     string tag;
@@ -54,8 +35,9 @@ int main()
     vector<string> fileList;
     int counter;
     int enormity;
+    string decision = "x";
 
-    stuff.clear();
+
 
     while(keepGoing)
     {
@@ -125,6 +107,20 @@ int main()
                 break;
             case 6:
                 keepGoing=false;
+                cout<<"Save Changes? y/n"<<endl;
+                while (decision != "y"  && decision != "n" || cin.fail())
+            {
+                cin.clear();
+                cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                cin>>decision;
+                transform(decision.begin(), decision.end(), decision.begin(), ::tolower);
+                if (decision != "y" && decision!= "n")
+                    cout<<"Invalid Input"<<endl;
+            }
+            if (decision=="y")
+            {
+                test.stringifyMemory();
+            }
                 cout << "Closing program.";
                 break;
         }

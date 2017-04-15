@@ -1,3 +1,8 @@
+#ifndef FILEIO_H
+#define FILEIO_H
+
+#include "memory.h"
+
 class FileIO {
 private:
 	//This is a list of the files in the current working directory
@@ -29,7 +34,7 @@ FileIO::FileIO() {
 	}
 	closedir (dir);
 	} else {
-		// could not open directory 
+		// could not open directory
 		perror ("");
 
 	}
@@ -45,8 +50,8 @@ vector<string> FileIO::get_files(){
 	return cwd_files;
 }
 
-
-void FileIO::sync(memory memoryFiles){
+/*
+void FileIO::sync(vector<fileObject> memoryFiles){
 	vector<string> cwdFiles = get_files();
 	for(unsigned int i; i < cwdFiles.size(); i++){
 		if(memory.checkFileExistence(cwdFiles[i]) == (-1)){
@@ -62,7 +67,9 @@ void FileIO::sync(memory memoryFiles){
 		}
 	}
 }
+*/
 
 bool is_in_vector(vector<string> v, string to_find) {
 	return (find(v.begin(), v.end(), to_find) != v.end());
 }
+#endif
