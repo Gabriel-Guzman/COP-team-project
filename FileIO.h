@@ -46,7 +46,7 @@ vector<string> FileIO::get_files(){
 }
 
 
-<<<<<<< HEAD
+//<<<<<<< HEAD
 /*void FileIO::sync(memory memoryFiles){
 =======
 void FileIO::sync(memory memoryFiles){
@@ -68,9 +68,9 @@ void FileIO::sync(memory memoryFiles){
 }
 <<<<<<< HEAD
 */
-=======
+//=======
 
 bool is_in_vector(vector<string> v, string to_find) {
 	return (find(v.begin(), v.end(), to_find) != v.end());
 }
->>>>>>> 3e174d27dfbbcc0838819ef46ee53db210c85bc6
+//>>>>>>> 3e174d27dfbbcc0838819ef46ee53db210c85bc6

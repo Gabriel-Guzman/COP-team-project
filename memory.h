@@ -33,8 +33,14 @@ class memory
         void switchAdd(string, string);
         string lowerCase(string);
         bool deleteDuplicates(string, int index);
+        vector<fileObject> getMemory();
 
 };
+
+vector<fileObject> memory::getMemory()
+{
+	return memoryVector;
+}
 
 // passing by reference to make the run cost less
 memory::memory(vector<fileObject> &init)
@@ -114,6 +120,7 @@ void memory::switchAdd(string tag, string file)
 
     vector<string> tags;
     tags.push_back(tag);
+    cout << "'" << tag << "' was added succesfully." << endl;
 
     if (index == -1)
     {
@@ -182,6 +189,7 @@ int memory::checkFileExistence(string name)
 void memory::addTagToFile(int index, string tag)
 {
     memoryVector[index].addTag(tag);
+    
 }
 
 /*
@@ -201,7 +209,7 @@ void memory::deleteTagFromFile(string file, string tag)
     int index = checkFileExistence(file);
     if (index == -1)
     {
-        cout<<"That file either doesn't exist or does not have any tags in it.";
+        cout<<"That file either doesn't exist or does not have any tags in it. Returning to menu.";
         cout<<endl<<endl;
         return;
     }
@@ -212,7 +220,7 @@ void memory::deleteTagFromFile(string file, string tag)
 
     if (!tagExist)
     {
-        cout<<"That file does not have tag '"<<tag<<"' to delete";
+        cout<<"That file does not have tag '"<<tag<<"' to delete. Returning to menu.";
         cout<<endl<<endl;
         return;
     }
@@ -220,10 +228,11 @@ void memory::deleteTagFromFile(string file, string tag)
     bool isEmpty;
 
     isEmpty = memoryVector[index].deleteTag(tag);
-
+	cout << "'" << tag << "' was deleted succesfully." << endl;
     if (isEmpty)
     {
         memoryVector.erase (memoryVector.begin()+ index);
+		
     }
 
 }
@@ -316,5 +325,7 @@ string memory::lowerCase(string tag)
 
     return tag;
 }
+
+
 
 #endif // MEMORY_H

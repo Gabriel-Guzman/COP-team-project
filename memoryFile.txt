@@ -1,6 +1,6 @@
-cheese:: tag1 tag2 
-beans:: tag1 tag2 red blue 
-carrots:: tag1 tag2 red blue eight twelve 
 cheese: tag1 tag2 
-beans: red blue 
-carrots: eight twelve 
+beans: tag1 tag2 tag1 tag2 red blue 
+carrots: tag1 tag2 tag1 tag2 red blue tag1 tag2 red blue eight twelve 
+cheese: tag1 tag2 tag1 tag2 red blue tag1 tag2 red blue eight twelve tag1 tag2 
+beans: tag1 tag2 tag1 tag2 red blue tag1 tag2 red blue eight twelve tag1 tag2 red 
+carrots: tag1 tag2 tag1 tag2 red blue tag1 tag2 red blue eight twelve tag1 tag2 red blue eight twelve 

@@ -74,7 +74,6 @@ int main()
         // takes one string at a time.
         {
 			int checker;
-			vector<string> tagSearch;
             case 1:
                 
                 cout<<"To what file would you like to add a tag to?"<<endl;
@@ -99,8 +98,9 @@ int main()
                         test.switchAdd(stuff[i], file);
                 }
                 break;
-            case 2:
-                cout<<"What file would you like to delete the tag from>"<<endl;
+            case 2: {
+                
+                cout<<"What file would you like to delete the tag from?"<<endl;
                 cin>>file;
                 checker = test.checkFileExistence(file);
                 if(checker == -1)
@@ -109,19 +109,17 @@ int main()
 					break;
 				} 
 				
-				else
-				{
-					tagSearch = test.at(checker).getTagList();
-				}
 				
-                cout<<"Which tag would you like to delete?"<<endl;
+				
+                
+				cout<<"Which tag would you like to delete?"<<endl;
                 cin>>tag;
            
+                test.deleteTagFromFile(file, tag);
                 
-
-                //test.deleteTagFromFile(file, tag);
                
                 break;
+			}
 
             case 3:
                 test.printMemory();
@@ -131,6 +129,11 @@ int main()
                 cout<<"What tag would you like to search for?"<<endl;
                 cin>>tag;
                 fileList = test.searchForFilesWithTag(tag);
+                if(fileList.size() == 0)
+                {
+					cout << "There are no files with that tag. Returning to menu." << endl;
+					break;
+				}
 
                 counter = 0;
                 enormity = fileList.size();
