@@ -31,9 +31,7 @@ class fileObject
         void stringifyFileObject();
         string returnFileName();
         vector<string>& getTagList();
-        string commaDeleter(string checkString);
-        bool commaPositionChecker (string checkString);
-        bool commaChecker(string checkString);
+        string commaChecker(string checkString);
 
 
 };
@@ -58,8 +56,20 @@ string fileObject::returnFileName()
 // this class will add a new tag to the vectorTag
 void fileObject::addTag(string tag)
 {
-    string temp = commaDeleter(tag);
-    tagList.push_back(temp);
+    tag = commaChecker(tag);
+    tagList.push_back(tag);
+}
+
+string fileObject::commaChecker(string tag)
+{
+    int position;
+    int theEnd = tag.length()-1;
+    position= tag.find(',', theEnd);
+    if (position == theEnd)
+    {
+        tag= tag.substr(0, theEnd);
+    }
+    return tag;
 }
 
 /*
@@ -169,41 +179,5 @@ void fileObject::stringifyFileObject()
     memoryFile.close();
 }
 
-//This method checks to see if there is a comma in a string.
-bool fileObject::commaChecker(string checkString)
-{
-    bool checker = false;
-    int commaIndex = checkString.find(",");
-    if (commaIndex < 1000000)
-        checker = true;
-    return checker;
-}
 
-//This method checks to verify that a comma is at the end of a string.
-bool fileObject::commaPositionChecker (string checkString)
-{
-    bool isEnd = false;
-    int commaIndex = checkString.find(",");
-    if (commaIndex == (checkString.length() - 1))
-        isEnd = true;
-    return isEnd;
-}
-
-//This method deletes a string's comma if it has one at the end.
-string fileObject::commaDeleter(string checkString)
-{
-    bool hasComma = commaChecker(checkString);
-    bool isEnd = commaPositionChecker(checkString);
-    string returnString = "";
-    if (!hasComma)
-        returnString = checkString;
-    else if (hasComma && isEnd)
-    {
-        string temp = checkString;
-        int index = checkString.find(",");
-        temp = checkString.substr(0, index);
-        returnString = temp;
-    }
-    return returnString;
-}
 #endif // FILEOBJECT_H
