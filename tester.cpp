@@ -9,22 +9,26 @@
 #include "dirent.h"
 #include "FileIO.h"
 
+#include <cstdlib>
+
 using namespace std;
 vector<string> splitString(string);
 
 int main()
 {
+    
     vector<string> stuff;
 
     vector<fileObject> init;
-    memory test(init);
+    FileIO fio;
+    memory mem(init);
 
-    if(!test.initializeMemory()){
+    if(!mem.initializeMemory()){
         cout << "Error reading memory. Shutting down." << endl;
         return 1;
     }
 
-
+    fio.sync(mem);
 
     int choice;
     string tag1;
@@ -42,9 +46,9 @@ int main()
     while(keepGoing)
     {
         //1 addtag, 2 deleteTag, 3 print, 4 search, 5 stringifyMemory, 6 quit
-        cout<<"1. Add a tag\n2. Delete a tag\n3. Print\n4. Search\n5. Save\n6. Quit"<<endl;
+        cout<<"1. Add a tag\n2. Delete a tag\n3. Print\n4. Search\n5. Save\n6. Run\n7. Quit"<<endl;
         cin>>choice;
-        while (choice >6 || choice < 1 || cin.fail())
+        while (choice > 7 || choice < 1 || cin.fail())
         {
             cin.clear();
             cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -60,7 +64,7 @@ int main()
                 
                 cout<<"To what file would you like to add a tag to?"<<endl;
                 cin>>file;
-                if(test.checkFileExistence(file) == -1)
+                if(mem.checkFileExistence(file) == -1)
                 {
 					cout << "A file with that name does not exist. Returning to menu." << endl;
 					break;
@@ -77,40 +81,37 @@ int main()
                 /// takes one string at a time
                 for (unsigned int i =0; i<stuff.size(); i++)
                 {
-                        test.switchAdd(stuff[i], file);
+                        mem.switchAdd(stuff[i], file);
                 }
                 break;
             case 2: {
                 
                 cout<<"What file would you like to delete the tag from?"<<endl;
                 cin>>file;
-                checker = test.checkFileExistence(file);
+                checker = mem.checkFileExistence(file);
                 if(checker == -1)
                 {
 					cout << "A file with that name does not exist. Returning to menu." << endl;
 					break;
 				} 
 				
-				
-				
-                
 				cout<<"Which tag would you like to delete?"<<endl;
                 cin>>tag;
            
-                test.deleteTagFromFile(file, tag);
+                mem.deleteTagFromFile(file, tag);
                 
                
                 break;
 			}
 
             case 3:
-                test.printMemory();
+                mem.printMemory();
                 break;
 
             case 4: 
                 cout<<"What tag would you like to search for?"<<endl;
                 cin>>tag;
-                fileList = test.searchForFilesWithTag(tag);
+                fileList = mem.searchForFilesWithTag(tag);
                 if(fileList.size() == 0)
                 {
 					cout << "There are no files with that tag. Returning to menu." << endl;
@@ -129,13 +130,22 @@ int main()
 			
 
             case 5:
-                test.stringifyMemory();
+                mem.stringifyMemory();
                 cout << "Tags and file(s) saved!" << endl;
                 break;
             case 6:
+                {
+                string toRun;
+                cout << "What file would you like to open?" << endl;
+                cin >> toRun;
+
+                int result = system(toRun.c_str());
+                break;
+                }
+            case 7:
                 keepGoing=false;
                 cout<<"Save Changes? y/n"<<endl;
-                while (decision != "y"  && decision != "n" || cin.fail())
+                while ((decision != "y"  && decision != "n") || cin.fail())
             {
                 cin.clear();
                 cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -146,7 +156,7 @@ int main()
             }
             if (decision=="y")
             {
-                test.stringifyMemory();
+                mem.stringifyMemory();
             }
                 cout << "Closing program.";
                 break;

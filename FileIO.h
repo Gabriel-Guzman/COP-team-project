@@ -2,7 +2,11 @@
 #ifndef FILEIO_H
 #define FILEIO_H
 
-#include "memory.h"
+
+
+bool is_in_vector(vector<string> v, string to_find) {
+	return (find(v.begin(), v.end(), to_find) != v.end());
+}
 
 class FileIO {
 private:
@@ -14,7 +18,7 @@ public:
 	// This method will parse fileName and create fileObjects, that will be pushed to mem
 	bool worked();
 	// Check if worked before calling get files to avoid unexpected behavior
-	void sync(vector<fileObject>& memoryFiles);
+	void sync(memory& memoryFiles);
 	// Syncs memory and cwd files by adding all missing cwd files into memory AND deleting all noncwd files from memory
 
 	vector<string> get_files();
@@ -26,10 +30,12 @@ FileIO::FileIO() {
 
 	DIR *dir;
     struct dirent *ent;
+    string ban1 = ".";
+    string ban2 = "..";
 	if ((dir = opendir ("./")) != NULL) {
 
 	while ((ent = readdir (dir)) != NULL) {
-		if(ent->d_name != "." && ent->d_name != "..")
+		if(ban1.compare(ent->d_name) != 0 && ban2.compare(ent->d_name))
 			cwd_files.push_back(ent->d_name);
 
 	}
@@ -39,6 +45,7 @@ FileIO::FileIO() {
 		perror ("");
 
 	}
+
 }
 
 
@@ -53,27 +60,31 @@ vector<string> FileIO::get_files(){
 
 void FileIO::sync(memory &memoryFiles){
 
-	vector<string> cwdFiles = get_files();
-	for(unsigned int i; i < cwdFiles.size(); i++){
-		if(memoryFiles.checkFileExistence(cwdFiles[i]) == (-1)){
-			vector<string> emptyTagList;
-			memoryFiles.createFileObject(emptyTagList, cwdFiles[i]);
+	if(!worked()) {
+		cout << "Failed to get files, can't sync." << endl;
+	} else {
+		vector<string> cwdFiles = get_files();
+		for(unsigned int i; i < cwdFiles.size(); i++){
+			if(memoryFiles.checkFileExistence(cwdFiles[i]) == (-1)){
+				vector<string> emptyTagList;
+				memoryFiles.createFileObject(emptyTagList, cwdFiles[i]);
+				cout << "CREATED: " << cwdFiles[i] << endl;
+			}
 		}
-	}
 
-	vector<fileObject> temp
 
-	for(unsigned int i; i < memoryFiles.size(); i++){
-		if(!is_in_vector(cwdFiles, memoryFiles[i])){
-			//TODO write delete funct
-			deleteFromMemory(memoryFiles[i]);
+		vector<fileObject> temp = memoryFiles.getMemory();
+
+		for(unsigned int i; i < temp.size(); i++){
+			if(!is_in_vector(cwdFiles, temp[i].returnFileName())){
+				//TODO write delete funct
+				memoryFiles.deleteFileObject(temp[i].returnFileName());
+				cout << "DELETED: " << temp[i].returnFileName() << endl;
+			}
 		}
 	}
 
 
 }
 
-bool is_in_vector(vector<string> v, string to_find) {
-	return (find(v.begin(), v.end(), to_find) != v.end());
-}
 #endif
