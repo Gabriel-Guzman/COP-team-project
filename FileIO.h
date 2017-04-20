@@ -25,6 +25,7 @@ public:
 
 };
 
+//On construction, FileIO creates the list of files in our directory.
 FileIO::FileIO() {
 	success = false;
 
@@ -45,7 +46,7 @@ FileIO::FileIO() {
 		perror ("");
 
 	}
-
+	success = true;
 }
 
 
@@ -58,6 +59,8 @@ vector<string> FileIO::get_files(){
 	return cwd_files;
 }
 
+//This function deletes files in memory if they don't exist anymore on disk, and creates new files in memory
+// if they're new on the disk. This will let us keep an updated list of files.
 void FileIO::sync(memory &memoryFiles){
 
 	if(!worked()) {
@@ -68,7 +71,6 @@ void FileIO::sync(memory &memoryFiles){
 			if(memoryFiles.checkFileExistence(cwdFiles[i]) == (-1)){
 				vector<string> emptyTagList;
 				memoryFiles.createFileObject(emptyTagList, cwdFiles[i]);
-				cout << "CREATED: " << cwdFiles[i] << endl;
 			}
 		}
 
@@ -77,9 +79,8 @@ void FileIO::sync(memory &memoryFiles){
 
 		for(unsigned int i; i < temp.size(); i++){
 			if(!is_in_vector(cwdFiles, temp[i].returnFileName())){
-				//TODO write delete funct
 				memoryFiles.deleteFileObject(temp[i].returnFileName());
-				cout << "DELETED: " << temp[i].returnFileName() << endl;
+
 			}
 		}
 	}

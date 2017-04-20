@@ -234,6 +234,7 @@ void memory::deleteTagFromFile(string file, string tag)
         return;
     }
 
+    /*
     bool isEmpty;
 
     isEmpty = memoryVector[index].deleteTag(tag);
@@ -242,7 +243,7 @@ void memory::deleteTagFromFile(string file, string tag)
     {
         memoryVector.erase (memoryVector.begin()+ index);
 		
-    }
+    }*/
 
 }
 

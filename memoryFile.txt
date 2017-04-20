@@ -2,11 +2,10 @@ FileIO.h:
 .DS_Store: 
 memoryFile.txt: 
 fileObject.h: 
-runproj: run effective 
-t.o: 
+runproj: exec batch 
+t.o: exec test 
 tester.cpp: 
 .git: 
 README.md: 
 tester.o: 
 memory.h: 
-COP-team-project: 
