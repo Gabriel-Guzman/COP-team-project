@@ -1,4 +1,4 @@
-3#include <iostream>
+#include <iostream>
 #include <sstream>
 #include <algorithm>
 #include <iterator>
@@ -151,7 +151,7 @@ int main()
                 cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                 getline(cin, toRun);
 
-                int result = system(toRun.c_str());
+                /*int result = */system(toRun.c_str());
                 break;
                 }
             case 7: {
